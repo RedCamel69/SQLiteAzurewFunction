@@ -53,5 +53,24 @@ public class HttpApi
 
         return new OkObjectResult(studentsArray);
     }
+
+     [FunctionName(nameof(PostStudent))]
+    public async Task<IActionResult> PostStudent(
+     [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] [FromBody] CreateStudentDto requestDto, ILogger log)
+    {
+        var student = new Student
+        {
+             FirstName = requestDto.FirstName,  
+             LastName = requestDto.LastName,
+              School=requestDto.School
+        };
+
+        log.LogInformation("C# HTTP GET trigger function processed api/students request.");
+
+        this._context.Add(student);
+        await this._context.SaveChangesAsync();
+
+        return new OkResult();
+    }
 }
 
