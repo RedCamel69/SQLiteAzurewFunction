@@ -11,8 +11,11 @@ namespace SQLiteFunction
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            File.Copy("D:\\home\\site\\wwwroot\\school.db", "D:\\home\\school.db");
-            File.SetAttributes("D:\\home\\school.db", FileAttributes.Normal);
+            if (!File.Exists("D:\\home\\school2.db"))
+            {
+                File.Copy("D:\\home\\site\\wwwroot\\school.db", "D:\\home\\school.db");
+                File.SetAttributes("D:\\home\\school.db", FileAttributes.Normal);
+            }
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
